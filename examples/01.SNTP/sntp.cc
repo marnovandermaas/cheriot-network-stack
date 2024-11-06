@@ -13,7 +13,9 @@ constexpr bool UseIPv6 = CHERIOT_RTOS_OPTION_IPv6;
 
 void __cheri_compartment("sntp_example") example()
 {
+	Debug::log("SNTP example");
 	network_start();
+	Debug::log("Network started.");
 	Timeout t{MS_TO_TICKS(5000)};
 	while (sntp_update(&t) != 0)
 	{

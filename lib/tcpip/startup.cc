@@ -12,7 +12,7 @@
 #include <platform-ethernet.hh>
 #include <tcpip-internal.h>
 
-using Debug = ConditionalDebug<false, "TCP/IP Stack startup">;
+using Debug = ConditionalDebug<true, "TCP/IP Stack startup">;
 
 #include "../firewall/firewall.hh"
 

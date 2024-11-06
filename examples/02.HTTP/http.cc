@@ -22,6 +22,7 @@ DECLARE_AND_DEFINE_ALLOCATOR_CAPABILITY(TestMalloc, 32 * 1024);
 
 void __cheri_compartment("http_example") example()
 {
+	Debug::log("HTTP example");
 	network_start();
 	Debug::log("Creating connection");
 	Timeout unlimited{UnlimitedTimeout};
