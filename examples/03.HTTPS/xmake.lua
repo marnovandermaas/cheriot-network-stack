@@ -27,6 +27,14 @@ compartment("https_example")
     target:add("defines", "CHERIOT_RTOS_OPTION_IPv6=" .. tostring(IPv6))
   end)
 
+function convert_to_uf2(target)
+    local firmware = target:targetfile()
+    os.execv("llvm-strip", { firmware, "-o", firmware .. ".strip" })
+    os.execv("uf2conv", { firmware .. ".strip", "-b0x00000000", "-f0x6CE29E60", "-co", firmware .. ".slot1.uf2" })
+    os.execv("uf2conv", { firmware .. ".strip", "-b0x10000000", "-f0x6CE29E60", "-co", firmware .. ".slot2.uf2" })
+    os.execv("uf2conv", { firmware .. ".strip", "-b0x20000000", "-f0x6CE29E60", "-co", firmware .. ".slot3.uf2" })
+end
+
 firmware("03.https_example")
   set_policy("build.warning", true)
   add_deps("https_example")
@@ -60,4 +68,5 @@ firmware("03.https_example")
       }
     }, {expand = false})
   end)
+  after_link(convert_to_uf2)
 
